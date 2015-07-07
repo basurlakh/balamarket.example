@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: zhelonkinanton@gmail.com
+ * User: basurlakh@gmail.com
  * Date: 07.07.2015
  * Time: 23:02
  */
@@ -44,14 +44,13 @@ $arProducts = ProductTable::getList(array(
     "select" => array(
         "ID",
         "NAME",
-        "COLOR" => "PROPERTY_SIMPLE.COLOR",
-        "MINIMUM_PRICE" => "PROPERTY_SIMPLE.MINIMUM_PRICE", // Значение свойства "MINIMUM_PRICE"
-        "MAXIMUM_PRICE" => "PROPERTY_SIMPLE.MAXIMUM_PRICE", // Значение свойства "MAXIMUM_PRICE"
+        "ARTNUMBER" => "PROPERTY_SIMPLE.ARTNUMBER",
+        "MANUFACTURER" => "PROPERTY_SIMPLE.MANUFACTURER", // Значение свойства "MANUFACTURER"
         "SECTION_NAME" => "SECTION.NAME" // Название раздела
     ),
     "filter" => array(
         "=ACTIVE" => "Y",
-        "!=PROPERTY_SIMPLE.COLOR" => false // свойство "COLOR" должно быть не пустым
+        "!=PROPERTY_SIMPLE.ARTNUMBER" => false // свойство "ARTNUMBER" должно быть не пустым
     ),
     "limit" => 10
 ))->fetchAll();
@@ -63,10 +62,9 @@ $arProducts = ProductTable::getList(array(
     "select" => array(
         "ID",
         "NAME",
-        "COLOR" => "PROPERTY_SIMPLE.COLOR",
+        "ARTNUMBER" => "PROPERTY_SIMPLE.ARTNUMBER",
         "MATERIALS", // Значения множественного свойства "MATERIAL"
-        "MINIMUM_PRICE" => "PROPERTY_SIMPLE.MINIMUM_PRICE", // Значение свойства "MINIMUM_PRICE"
-        "MAXIMUM_PRICE" => "PROPERTY_SIMPLE.MAXIMUM_PRICE", // Значение свойства "MAXIMUM_PRICE"
+        "MANUFACTURER" => "PROPERTY_SIMPLE.MANUFACTURER", // Значение свойства "MANUFACTURER"
     ),
     "runtime" => array(
         "MATERIALS" => array(
@@ -79,7 +77,7 @@ $arProducts = ProductTable::getList(array(
     ),
     "filter" => array(
         "=ACTIVE" => "Y",
-        "!=PROPERTY_SIMPLE.COLOR" => false // свойство "COLOR" должно быть не пустым
+        "!=PROPERTY_SIMPLE.ARTNUMBER" => false // свойство "ARTNUMBER" должно быть не пустым
     ),
     "group" => array("ID"),
     "limit" => 10
@@ -113,11 +111,9 @@ $arProductSections = ProductSectionTable::getList(array(
         "CHILD_SECTION" => array(
             "data_type" => '\Balamarket\Example\Catalog\ProductSectionTable',
             "reference" => array(
-                "reference" => array(
-                    "<=this.LEFT_MARGIN" => "ref.LEFT_MARGIN",
-                    ">this.RIGHT_MARGIN" => "ref.RIGHT_MARGIN",
-                    "ref.IBLOCK_ID" => new SqlExpression('?i', ProductSectionTable::getIblockId()) // Фильтрация по id инфоблока
-                )
+                "<=this.LEFT_MARGIN" => "ref.LEFT_MARGIN",
+                ">this.RIGHT_MARGIN" => "ref.RIGHT_MARGIN",
+                "ref.IBLOCK_ID" => new SqlExpression('?i', ProductSectionTable::getIblockId()) // Фильтрация по id инфоблока
             )
         )
     ),
